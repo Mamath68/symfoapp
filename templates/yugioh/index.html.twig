@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello YugiohController!
+{% endblock %}
+
+{% block body %}
+	<div class="container px-4 mx-auto">
+		<h1 class="my-8 text-3xl font-bold">Yu-Gi-Oh! Cards</h1>
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+			{% if cards is defined %}
+
+				{% for card in cards %}
+					<div class="overflow-hidden bg-white rounded-lg shadow-md">
+						<img src="{{ card.card_images[0].image_url }}" alt="{{ card.name }}" title="{{ card.name }}" class="w-full h-auto">
+						<div class="p-4">
+							<h2 class="mb-2 text-xl font-bold">
+								<a href="{{ path('app_card_detail', {'id': card.id}) }}">
+									{{ card.name }}</a>
+							</h2>
+							{% if card.type == "Spell Card" or card.type == "Trap Card" %}
+								<p class="text-base text-gray-700">{{ card.race ~ " " ~ card.type }}</p>
+							{% else %}
+								<p class="text-base text-gray-700">{{ card.type }}</p>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="overflow-hidden bg-white rounded-lg shadow-md">
+					Card Charging ...
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

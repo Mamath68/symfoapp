@@ -1,0 +1,54 @@
+{# templates/card/detail.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ card.name }}
+{% endblock %}
+
+{% block body %}
+    <div class="container px-4 py-8 mx-auto">
+        <div class="max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-lg">
+            <div class="md:flex">
+                <div class="md:flex-shrink-0">
+                    <img class="object-cover w-full h-auto md:w-48" src="{{ card.card_images[0].image_url }}"
+                         alt="{{ card.name }}" title="{{ card.name }}">
+                </div>
+                <div class="p-8">
+                    <div class="text-sm font-semibold tracking-wide text-indigo-500 uppercase">{{ card.type }}</div>
+                    <h1 class="mt-1 text-4xl font-bold leading-tight">{{ card.name }}</h1>
+                    <p class="mt-2 text-gray-600">{{ card.desc }}</p>
+
+                    {% if card.atk is defined and card.def is defined %}
+                        <p class="mt-4">ATK:
+                            {{ card.atk }}
+                            / DEF:
+                            {{ card.def }}</p>
+                    {% endif %}
+
+                    {% if card.level is defined %}
+                        <p>Level:
+                            {{ card.level }}</p>
+                    {% endif %}
+
+                    {% if card.attribute is defined %}
+                        <p>Attribute:
+                            {{ card.attribute }}</p>
+                    {% endif %}
+                    <p>Race: {{ card.race }}</p>
+                    {% if card.archetype is defined %}
+                        <a href="{{ path('app_archetype_cards', {'archetype': card.archetype|url_encode}) }}">Archetype:
+                            {{ card.archetype }}</a>
+                    {% else %}
+                        <p>No archetype for this card</p>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <a href="{{ path('app_cards') }}" class="text-indigo-500 hover:text-indigo-600">Retour à la
+                            liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

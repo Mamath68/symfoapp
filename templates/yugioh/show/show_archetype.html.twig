@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Archetype: {{ archetype }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4">
+        <h1 class="my-8"> Archetype: {{ archetype }}</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {% if cards is defined %}
+                {% for card in cards %}
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <img src="{{ card.card_images[0].image_url }}" alt="{{ card.name }}" title="{{ card.name }}"
+                             class="w-full h-auto">
+                        <div class="p-4">
+                            <h2 class="mb-2"><a
+                                        href="{{ path('app_card_detail', {'id': card.id}) }}"> {{ card.name }}</a></h2>
+                            {% if card.type == "Spell Card" or card.type == "Trap Card" %}
+                                <p class="text-gray-700">{{ card.race ~ " " ~ card.type }}</p>
+                            {% else %}
+                                <p class="text-gray-700">{{ card.type }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    Card Charging ...
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
